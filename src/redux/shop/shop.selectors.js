@@ -13,14 +13,3 @@ export const selectCollectionsForPreview = createSelector(
   [selectCollections],
   (collections) => Object.keys(collections).map((key) => collections[key])
 );
-
-export const selectCollection = () => {
-  const location = useLocation();
-  return createSelector(
-    [selectCollections],
-    (collections) =>
-      collections[
-        location.pathname.split("/")[location.pathname.split("/").length - 1]
-      ]
-  );
-};

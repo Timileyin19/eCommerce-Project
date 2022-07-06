@@ -16,7 +16,7 @@ const CheckoutPage = ({ cartItems, total, currentUser }) => {
         if (!currentUser) {
             navigate('/signin')
         }
-    }, [currentUser])
+    }, [currentUser, navigate])
 
 
 
@@ -53,7 +53,7 @@ const CheckoutPage = ({ cartItems, total, currentUser }) => {
                 <CheckoutItem key={cartItem.id} cartItem={cartItem} />
             ))}
             <div className="total">TOTAL:  ₦ {total}</div>
-            {currentUser ? <PaystackCheckout {...checkoutProps} /> : <button onClick={() => navigate('/signin')}>Sign-in to Make Payment</button>}
+            {cartItems?.length > 0 ? <PaystackCheckout {...checkoutProps} /> : <button onClick={() => navigate('/shop')}>Populate Cart With Products</button>}
 
         </div>
     )

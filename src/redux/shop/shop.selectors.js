@@ -1,6 +1,4 @@
-import React from "react";
 import { createSelector } from "reselect";
-import { useLocation } from "react-router-dom";
 
 const selectShop = (state) => state.shop;
 

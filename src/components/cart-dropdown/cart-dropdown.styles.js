@@ -1,4 +1,6 @@
-.cart-dropdown {
+import styled from "@emotion/styled";
+
+export const CartDropdownWrapper = styled.div`
   position: absolute;
   width: 240px;
   height: 340px;
@@ -27,4 +29,4 @@
     margin-top: auto;
     font-size: 12px;
   }
-}
+`;

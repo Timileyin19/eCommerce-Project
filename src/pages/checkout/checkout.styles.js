@@ -1,4 +1,6 @@
-.checkout-page {
+import styled from "@emotion/styled";
+
+export const CheckoutpageWrapper = styled.div`
   width: 55%;
   min-height: 90vh;
   display: flex;
@@ -28,4 +30,4 @@
     margin-left: auto;
     font-size: 36px;
   }
-}
+`;

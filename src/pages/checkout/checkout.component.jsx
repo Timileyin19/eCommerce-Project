@@ -4,9 +4,10 @@ import { createStructuredSelector } from 'reselect';
 import CheckoutItem from '../../components/checkout-item/checkout-item.component';
 import { selectCartItems, selectCartTotal } from '../../redux/cart/cart.selectors';
 import { selectCurrentUser } from '../../redux/user/user.selectors'
-import './checkout.styles.scss';
+import { CheckoutpageWrapper } from './checkout.styles'
 import { useNavigate } from 'react-router-dom';
 import PaystackCheckout from '../../components/paystack-checkout/paystack-checkout.component';
+
 
 
 const CheckoutPage = ({ cartItems, total, currentUser }) => {
@@ -31,7 +32,7 @@ const CheckoutPage = ({ cartItems, total, currentUser }) => {
     }
 
     return (
-        <div className="checkout-page">
+        <CheckoutpageWrapper>
             <div className="checkout-header">
                 <div className="header-block">
                     <span>{cartItems?.length > 1 ? 'Products' : 'Product'} </span>
@@ -55,7 +56,7 @@ const CheckoutPage = ({ cartItems, total, currentUser }) => {
             <div className="total">TOTAL:  ₦ {total}</div>
             {cartItems?.length > 0 ? <PaystackCheckout {...checkoutProps} /> : <button onClick={() => navigate('/shop')}>Populate Cart With Products</button>}
 
-        </div>
+        </CheckoutpageWrapper>
     )
 }
 

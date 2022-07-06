@@ -1,5 +1,5 @@
 import React from 'react';
-import './cart-dropdown.styles.scss';
+import { CartDropdownWrapper } from './cart-dropdown.styles'
 import CustomButton from '../custom-button/custom-button.component';
 import CartItem from '../cart-item/cart-item.component';
 
@@ -14,7 +14,7 @@ const CartDropdown = ({ cartItems, dispatch }) => {
     const navigate = useNavigate();
 
     return (
-        <div className="cart-dropdown">
+        <CartDropdownWrapper>
             <div className="cart-items">
                 {
                     cartItems?.length ? (
@@ -32,7 +32,7 @@ const CartDropdown = ({ cartItems, dispatch }) => {
                     GO TO CHECKOUT
                 </CustomButton>
             </div>
-        </div>
+        </CartDropdownWrapper>
     )
 }
 const mapStateToProps = createStructuredSelector({

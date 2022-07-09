@@ -20,4 +20,6 @@ const rootReducer = combineReducers({
   shop: shopReducer,
 });
 
+// change all the redux functionalities to hooks
+
 export default persistReducer(persistConfig, rootReducer);

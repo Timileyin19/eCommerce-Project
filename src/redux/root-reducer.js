@@ -20,6 +20,6 @@ const rootReducer = combineReducers({
   shop: shopReducer,
 });
 
-// change all the redux functionalities to hooks
+// initializing the Graphql functionality
 
 export default persistReducer(persistConfig, rootReducer);

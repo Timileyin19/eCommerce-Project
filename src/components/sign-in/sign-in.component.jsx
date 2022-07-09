@@ -15,7 +15,7 @@ const SignIn = () => {
         const { email, password } = item;
 
         try {
-            const resp = await auth.signInWithEmailAndPassword(email, password);
+            await auth.signInWithEmailAndPassword(email, password);
 
             setItem({ email: '', password: '' })
 
@@ -27,9 +27,9 @@ const SignIn = () => {
             } else {
                 alert('Ooops, Network Error! Please try again.')
             }
-            
+
             console.log(error)
-        }  
+        }
     }
 
     const handleChange = event => {
@@ -42,7 +42,7 @@ const SignIn = () => {
             <h2>I already have an account</h2>
             <span>Sign in with your email and password</span>
             <form onSubmit={handleSubmit}>
-                <FormInput 
+                <FormInput
                     name='email'
                     type='email'
                     handleChange={handleChange}
@@ -50,7 +50,7 @@ const SignIn = () => {
                     label='email'
                     required
                 />
-                <FormInput 
+                <FormInput
                     name='password'
                     type='password'
                     handleChange={handleChange}
@@ -59,8 +59,8 @@ const SignIn = () => {
                     required
                 />
                 <div className="buttons">
-                <CustomButton type='submit'>Sign in</CustomButton>
-                <CustomButton type='button' onClick={signInWithGoogle} isGoogleSignIn>Sign in with Google</CustomButton>
+                    <CustomButton type='submit'>Sign in</CustomButton>
+                    <CustomButton type='button' onClick={signInWithGoogle} isGoogleSignIn>Sign in with Google</CustomButton>
                 </div>
             </form>
         </div>

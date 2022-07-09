@@ -2,24 +2,24 @@ import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './menu-item.styles.scss';
 
-const MenuItem = ({ title, imageUrl, linkUrl, size}) => {
+const MenuItem = ({ name, imageUrl, routeName, size }) => {
     const navigate = useNavigate();
     const location = useLocation();
     return (
-        <div 
+        <div
             className={`${size} menu-item`}
-            onClick={() => location.pathname === '/' ? navigate(`${location.pathname}${linkUrl}`) : navigate(`${location.pathname}/${linkUrl}`)}
+            onClick={() => navigate(`${location.pathname}${routeName}`)}
         >
             <div className="background-image"
                 style={{
                     backgroundImage: `url(${imageUrl})`
                 }}
-             />
-                <div className="content">
-                    <h1 className="title">{title.toUpperCase()}</h1>
-                    <span className="subtitle">SHOP NOW</span>
-                </div>
-           
+            />
+            <div className="content">
+                <h1 className="title">{name.toUpperCase()}</h1>
+                <span className="subtitle">SHOP NOW</span>
+            </div>
+
         </div>
     )
 }

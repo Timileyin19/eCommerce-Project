@@ -10,9 +10,35 @@ import "./App.css";
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
-
 import { setCurrentUser } from "./redux/user/user.actions";
 import { selectCurrentUser } from "./redux/user/user.selectors";
+
+// graphql
+import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
+
+const cache = new InMemoryCache({
+  typePolicies: {
+    Query: {
+      fields: {
+        products: {
+          merge(existing, incoming) {
+            return incoming;
+          },
+        },
+        productCategories: {
+          merge(existing, incoming) {
+            return incoming;
+          },
+        },
+      },
+    },
+  },
+});
+
+const client = new ApolloClient({
+  uri: "http://localhost:5000/graphql",
+  cache,
+});
 
 function App({ setCurrentUser }) {
   useEffect(() => {
@@ -27,18 +53,22 @@ function App({ setCurrentUser }) {
 
       setCurrentUser(userAuth);
     });
-  }, []);
+  }, [setCurrentUser]);
 
   return (
     <>
-      <Header />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/shop" element={<CollectionOverview />} />
-        <Route path="/shop/:collectionId" element={<CollectionPage />} />
-        <Route path="/signin" element={<SignInAndSignUpPage />} />
-        <Route path="/checkout" element={<CheckoutPage />} />
-      </Routes>
+      <ApolloProvider client={client}>
+        <Header />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/shop" element={<CollectionOverview />} />
+          <Route path="/shop/:collectionId" element={<CollectionPage />} />
+          <Route path="/signin" element={<SignInAndSignUpPage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
+          {/* Use the Path below to implement Not Found */}
+          {/* <Route path='*' element={<NotFound />} /> */}
+        </Routes>
+      </ApolloProvider>
     </>
   );
 }

@@ -3,13 +3,12 @@ import { PaystackButton } from 'react-paystack';
 import './paystack-checkout.styles.scss';
 
 const PaystackCheckout = ({ amount, user }) => {
-    const { email, displayName } = user;
     const publicKey = 'pk_test_cad80db5737eaf2e2b665acd3fb534b43310730b';
     const PaystackButtonProps = {
-        email: email,
+        email: user?.email,
         amount: amount * 100,
         metadata: {
-            name: displayName,
+            name: user?.displayName,
         },
         publicKey,
         text: "Pay Now",

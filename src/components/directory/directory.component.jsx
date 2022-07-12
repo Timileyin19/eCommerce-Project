@@ -13,7 +13,6 @@ const Directory = () => {
   if (error) return <div>Error encountered while fetching Data. Please Try again. </div>
 
 
-
   return (
     <>
       {!loading && !error && (

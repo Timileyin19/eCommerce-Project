@@ -1,23 +1,30 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
 import CollectionPreview from '../collection-preview/collection-preview';
-import { selectCollectionsForPreview } from '../../redux/shop/shop.selectors';
 import './collections-overview.styles.scss';
 
-const CollectionOverview = ({ collections }) => {
-    console.log(collections)
+import { GET_PRODUCT_CATEGORIES } from '../../graphql/queries';
+import { useQuery } from '@apollo/client';
+
+
+const CollectionOverview = () => {
+    const { loading, error, data } = useQuery(GET_PRODUCT_CATEGORIES);
+
+    if (loading) return <div>loading...</div>
+    if (error) return <div>Error encountered while fetching Data. Please Try again. </div>
+
     return (
-        <div className="collections-overview">
-            {collections.map(({ id, ...otherCollectionProps }) => (
-                <CollectionPreview key={id} {...otherCollectionProps} />
-            ))}
-        </div>
+        <>
+            {!loading && !error && (
+                <div className="collections-overview">
+                    {data?.productCategories?.map((productCategory) => (
+                        <CollectionPreview key={productCategory.id} {...productCategory} />
+                    ))}
+                </div>
+            )}
+        </>
     )
 }
 
-const mapStateToProps = createStructuredSelector({
-    collections: selectCollectionsForPreview
-});
 
-export default connect(mapStateToProps)(CollectionOverview);
+
+export default CollectionOverview;

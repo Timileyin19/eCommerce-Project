@@ -6,6 +6,7 @@ import SignInAndSignUpPage from "./pages/sign-in-and-sign-up/sign-in-and-sign-up
 import CheckoutPage from "./pages/checkout/checkout.component";
 import CollectionOverview from "./components/collections-overview/collections-overview.component";
 import CollectionPage from "./pages/collection/collection.component";
+import NotFound from "./components/not-found/not-found.component";
 import "./App.css";
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 import { connect } from "react-redux";
@@ -65,8 +66,7 @@ function App({ setCurrentUser }) {
           <Route path="/shop/:collectionId" element={<CollectionPage />} />
           <Route path="/signin" element={<SignInAndSignUpPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
-          {/* Use the Path below to implement Not Found */}
-          {/* <Route path='*' element={<NotFound />} /> */}
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </ApolloProvider>
     </>

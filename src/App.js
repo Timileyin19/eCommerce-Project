@@ -53,6 +53,7 @@ function App({ setCurrentUser }) {
       }
 
       setCurrentUser(userAuth);
+      localStorage.setItem("userId", userAuth.email);
     });
   }, [setCurrentUser]);
 

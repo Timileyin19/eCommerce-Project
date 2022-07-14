@@ -16,6 +16,7 @@ const SignIn = () => {
 
         try {
             await auth.signInWithEmailAndPassword(email, password);
+            localStorage.setItem('userId', email);
 
             setItem({ email: '', password: '' })
 

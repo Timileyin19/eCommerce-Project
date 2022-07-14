@@ -2,38 +2,44 @@ import React from 'react';
 import './collection-item.styles.scss';
 import CustomButton from '../custom-button/custom-button.component';
 
-import { connect } from 'react-redux';
-import { createStructuredSelector } from "reselect";
-import { selectCurrentUser } from '../../redux/user/user.selectors';
-
-
-
-import { addItem } from '../../redux/cart/cart.actions';
-
 import { useQuery, useMutation } from '@apollo/client';
 import { GET_USER_CART } from '../../graphql/queries';
+import { ADD_ITEM_TO_CART, UPDATE_CART_ITEM } from '../../graphql/mutations';
 
 
-const CollectionItem = ({ currentUser, item, addItem }) => {
+const CollectionItem = ({ item }) => {
     const { id, name, price, imageUrl } = item;
 
-    const { loading, error, data: cartItems, refetch } = useQuery(GET_USER_CART,
-        { variables: { userId: currentUser?.email } });
+    const { error, data: cartItems } = useQuery(GET_USER_CART,
+        { variables: { userId: localStorage.getItem('userId') } });
+
+    const [addItemToCart] = useMutation(ADD_ITEM_TO_CART, {
+        refetchQueries: [{ query: GET_USER_CART }]
+    })
+
+    const [updateCartItem] = useMutation(UPDATE_CART_ITEM);
+
+
+    if (error) return <p>An Error occured while fetching User's cart. Please try again.</p>
 
 
 
-    const handleAddToItemToCart = (productId) => {
-        const exisitingItem = cartItems?.userCart?.filter(item => item.productId === productId);
+    const handleAddToItemToCart = () => {
+        const exisitingItem = cartItems?.userCart?.filter(item =>
+            item.productId === id
+        );
 
         if (exisitingItem?.length > 0) {
-            // update the quantity
+            const query_variables = { cartId: exisitingItem[0].id, quantity: exisitingItem[0].quantity };
+            updateCartItem({
+                variables: query_variables
+            })
         } else {
-            // add new cart
+            const queryVariable = { productId: id, userId: localStorage.getItem('userId'), name, imageUrl, price };
+            addItemToCart({
+                variables: queryVariable
+            });
         }
-
-
-
-        // product exist in user cart ? update : add
     }
 
     return (
@@ -50,8 +56,7 @@ const CollectionItem = ({ currentUser, item, addItem }) => {
                     <span className='price'>{price}</span>
                 </div>
                 <CustomButton
-                    // onClick={() => addItem(item)} 
-                    onClick={() => handleAddToItemToCart(id)}
+                    onClick={() => handleAddToItemToCart()}
                     inverted>
                     Add to cart
                 </CustomButton>
@@ -62,12 +67,7 @@ const CollectionItem = ({ currentUser, item, addItem }) => {
     )
 }
 
-const mapStateToProps = createStructuredSelector({
-    currentUser: selectCurrentUser,
-});
 
-const mapDispatchToProps = dispatch => ({
-    addItem: item => dispatch(addItem(item))
-});
 
-export default connect(mapStateToProps, mapDispatchToProps)(CollectionItem);
+
+export default CollectionItem;
